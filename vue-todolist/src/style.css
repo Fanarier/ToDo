@@ -1,0 +1,17 @@
+/* простой набор стилей, можно расширять */
+body {
+  background: #f3f4f6;
+  color:#222;
+  margin:0;
+  padding:0;
+  -webkit-font-smoothing:antialiased;
+}
+
+button {
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+}
+button:hover { opacity:0.95; }
