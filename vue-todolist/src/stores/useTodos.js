@@ -16,7 +16,7 @@ export const useTodos = defineStore('todos', () => {
   const items = reactive(loadFromStorage())
 
   function persist() {
-    // сохранение неизменяемой копии
+    // сохраняю список в localStorage
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
   }
 
@@ -59,9 +59,17 @@ export const useTodos = defineStore('todos', () => {
     persist()
   }
 
+  function reorder(oldIndex, newIndex) {
+    // перемещаю элемент внутри массива
+    if (oldIndex === newIndex) return
+    const [moved] = items.splice(oldIndex, 1)
+    items.splice(newIndex, 0, moved)
+    persist()
+  }
+
   const completedCount = () => items.filter(i => i.done).length
 
-  // На всякий случай: следим за изменениями и сохраняем (защитный)
+  // слежу (защита на случай прямых изменений)
   watch(items, persist, { deep: true })
 
   return {
@@ -72,6 +80,7 @@ export const useTodos = defineStore('todos', () => {
     updateTodo,
     removeCompleted,
     clearAll,
+    reorder,
     completedCount
   }
 })
